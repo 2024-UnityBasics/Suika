@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8966906495723872419}
   - component: {fileID: 6013538546692754359}
   - component: {fileID: 898595514027084879}
+  - component: {fileID: -4368442181628250152}
   m_Layer: 0
   m_Name: Cherry
-  m_TagString: Untagged
+  m_TagString: Fruit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,3 +153,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-4368442181628250152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3891322993038899725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1115562eb8a734c469bf6bbd0c065646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruitLevel: 0
+  nextFruitPrefab: {fileID: 4632478639341481812, guid: 36dbca1f55fd6b440ae423f2361a542e, type: 3}
