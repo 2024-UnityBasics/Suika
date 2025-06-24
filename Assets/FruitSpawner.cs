@@ -1,21 +1,24 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-// ƒtƒ‹[ƒc‚ğ‰æ–Êã•”‚©‚ç—‚Æ‚·–ğŠ„‚ÌƒXƒNƒŠƒvƒg
+// ãƒ•ãƒ«ãƒ¼ãƒ„ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«è½ã¨ã™ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 public class FruitSpawner : MonoBehaviour
 {
-    // ƒCƒ“ƒXƒyƒNƒ^[‚©‚çİ’è‚·‚éƒtƒ‹[ƒc‚ÌƒvƒŒƒnƒui•¡»‚·‚éŒ³‚É‚È‚éƒIƒuƒWƒFƒNƒgj
-    [SerializeField] private GameObject fruitPrefab;
+    // è½ã¨ã™ãƒ•ãƒ«ãƒ¼ãƒ„ã®å€™è£œã‚’ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ãƒ¼ã‹ã‚‰è¤‡æ•°æŒ‡å®šã™ã‚‹
+    [SerializeField] private GameObject[] fruitPrefabs;
 
-    // ƒtƒ‹[ƒc‚ğ—‚Æ‚·ˆÊ’ui‰æ–Ê‚Ìã•”‚È‚Ç‚É‹ó‚ÌƒIƒuƒWƒFƒNƒg‚ğ’u‚¢‚Äİ’è‚·‚éj
+    // ãƒ•ãƒ«ãƒ¼ãƒ„ã‚’è½ã¨ã™ä½ç½®
     [SerializeField] private Transform spawnPoint;
 
     void Update()
     {
-        // ƒXƒy[ƒXƒL[‚ª‰Ÿ‚³‚ê‚½‚Æ‚«‚Éˆ—‚ğÀs
+        // ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ãŒæŠ¼ã•ã‚ŒãŸã‚‰ãƒ•ãƒ«ãƒ¼ãƒ„ã‚’è½ã¨ã™
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // fruitPrefab ‚ğ spawnPoint ‚ÌˆÊ’u‚É¶¬‚·‚é
-            Instantiate(fruitPrefab, spawnPoint.position, Quaternion.identity);
+            // ãƒ©ãƒ³ãƒ€ãƒ ã«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’é¸ã¶ï¼ˆ0ã€œé…åˆ—ã®é•·ã•-1ï¼‰
+            int index = Random.Range(0, fruitPrefabs.Length);
+
+            // å¯¾å¿œã™ã‚‹ãƒ•ãƒ«ãƒ¼ãƒ„ã‚’ã‚¹ãƒãƒ¼ãƒ³ãƒã‚¤ãƒ³ãƒˆã«ç”Ÿæˆ
+            Instantiate(fruitPrefabs[index], spawnPoint.position, Quaternion.identity);
         }
     }
 }
