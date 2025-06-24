@@ -14,29 +14,61 @@ public class FruitSpawner : MonoBehaviour
     // スポーンポイントが動ける左右の範囲（画面外に出ないように）
     [SerializeField] private float xLimit = 2.5f;
 
+    // ★次に落とすフルーツのインデックスを保存
+    private int nextFruitIndex;
+
+    // ★見本として表示するフルーツ（物理なし）
+    private GameObject previewFruit;
+
+    // ★ゲーム開始時に次のフルーツを準備
+    void Start()
+    {
+        GenerateNextFruit();
+    }
+
     void Update()
     {
-        // プレイヤーの左右入力（←→キー）を取得
+        // 左右入力でスポーンポイントを移動
         float input = Input.GetAxisRaw("Horizontal");
-
-        // 現在のスポーンポイントの位置を取得して、X座標を更新
         Vector3 pos = spawnPoint.position;
         pos.x += input * moveSpeed * Time.deltaTime;
-
-        // スポーンポイントが画面端を超えないように制限する
         pos.x = Mathf.Clamp(pos.x, -xLimit, xLimit);
-
-        // 実際にスポーンポイントを新しい位置に反映
         spawnPoint.position = pos;
 
-        // スペースキーが押されたらフルーツを1つ生成する
+        // スペースキーでフルーツをスポーン
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // fruitPrefabs配列からランダムに1つ選んで生成
-            int index = Random.Range(0, fruitPrefabs.Length);
+            // ★見本のフルーツと同じ種類を実体として生成
+            Instantiate(fruitPrefabs[nextFruitIndex], spawnPoint.position, Quaternion.identity);
 
-            // スポーンポイントの位置にフルーツを生成（回転なし）
-            Instantiate(fruitPrefabs[index], spawnPoint.position, Quaternion.identity);
+            // ★見本は一度削除して、新しく次の見本を生成
+            if (previewFruit != null)
+            {
+                Destroy(previewFruit);
+            }
+
+            GenerateNextFruit(); // ★次のフルーツを準備
         }
+    }
+
+    // ★次に落とすフルーツの見本を生成する処理
+    private void GenerateNextFruit()
+    {
+        // ★ランダムに次のインデックスを決める
+        nextFruitIndex = Random.Range(0, fruitPrefabs.Length);
+
+        // ★見本フルーツをスポーンポイントの子として生成（表示だけ）
+        previewFruit = Instantiate(fruitPrefabs[nextFruitIndex], spawnPoint);
+
+        // ★物理挙動と当たり判定をオフにする（見た目専用）
+        Rigidbody2D rb = previewFruit.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.simulated = false;
+
+        Collider2D col = previewFruit.GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        // ★見本はスポーンポイントにピッタリ合わせる
+        previewFruit.transform.localPosition = Vector3.zero;
+        previewFruit.transform.localRotation = Quaternion.identity;
     }
 }
